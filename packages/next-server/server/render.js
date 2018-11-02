@@ -211,8 +211,11 @@ export async function renderScriptError (req, res, page, error) {
 export function sendHTML (req, res, html, method, { dev, generateEtags }) {
   if (isResSent(res)) return
   const etag = generateEtags && generateETag(html)
+  if (etag) {
+    res.set('etag', etag);
+  }
 
-  if (fresh(req.headers, { etag })) {
+  if (fresh(req.headers, res.headers)) {
     res.statusCode = 304
     res.end()
     return
