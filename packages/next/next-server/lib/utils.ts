@@ -184,29 +184,29 @@ export type DocumentProps = DocumentInitialProps & {
 /**
  * Next `API` route request
  */
-export interface NextApiRequest extends IncomingMessage {
-  /**
-   * Object of `query` values from url
-   */
-  query: {
-    [key: string]: string | string[]
-  }
-  /**
-   * Object of `cookies` from header
-   */
-  cookies: {
-    [key: string]: string
-  }
-
-  body: any
-
-  env: Env
-
-  preview?: boolean
-  /**
-   * Preview data set on the request, if any
-   * */
-  previewData?: any
+type QueryType = {[key: string]: string | string[]};
+type CookieType = {[key: string]: string};
+export interface NextApiRequest<Q extends QueryType = QueryType, C extends CookieType = CookieType, B = any, PD = any> extends IncomingMessage {
+    /**
+     * Object of `query` values from url
+     */
+    query: Q;
+  
+    /**
+     * Object of `cookies` from header
+     */
+    cookies: C;
+  
+    body: B;
+  
+    env: Env;
+  
+    preview?: boolean;
+  
+    /**
+     * Preview data set on the request, if any
+     * */
+    previewData?: PD;
 }
 
 /**
